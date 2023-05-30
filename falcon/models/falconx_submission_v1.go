@@ -28,6 +28,9 @@ type FalconxSubmissionV1 struct {
 	// id
 	ID string `json:"id,omitempty"`
 
+	// index timestamp
+	IndexTimestamp string `json:"index_timestamp,omitempty"`
+
 	// origin
 	Origin string `json:"origin,omitempty"`
 

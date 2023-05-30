@@ -78,7 +78,7 @@ type CreateRuleGroupValidationCreated struct {
 	 */
 	XRateLimitRemaining int64
 
-	Payload *models.FwmgrMsaQueryResponse
+	Payload *models.FwmgrMsaspecQueryResponse
 }
 
 // IsSuccess returns true when this create rule group validation created response has a 2xx status code
@@ -119,7 +119,7 @@ func (o *CreateRuleGroupValidationCreated) String() string {
 	return fmt.Sprintf("[POST /fwmgr/entities/rule-groups/validation/v1][%d] createRuleGroupValidationCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateRuleGroupValidationCreated) GetPayload() *models.FwmgrMsaQueryResponse {
+func (o *CreateRuleGroupValidationCreated) GetPayload() *models.FwmgrMsaspecQueryResponse {
 	return o.Payload
 }
 
@@ -154,7 +154,7 @@ func (o *CreateRuleGroupValidationCreated) readResponse(response runtime.ClientR
 		o.XRateLimitRemaining = valxRateLimitRemaining
 	}
 
-	o.Payload = new(models.FwmgrMsaQueryResponse)
+	o.Payload = new(models.FwmgrMsaspecQueryResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -188,7 +188,7 @@ type CreateRuleGroupValidationBadRequest struct {
 	 */
 	XRateLimitRemaining int64
 
-	Payload *models.FwmgrMsaReplyMetaOnly
+	Payload *models.FwmgrMsaspecResponseFields
 }
 
 // IsSuccess returns true when this create rule group validation bad request response has a 2xx status code
@@ -229,7 +229,7 @@ func (o *CreateRuleGroupValidationBadRequest) String() string {
 	return fmt.Sprintf("[POST /fwmgr/entities/rule-groups/validation/v1][%d] createRuleGroupValidationBadRequest  %+v", 400, o.Payload)
 }
 
-func (o *CreateRuleGroupValidationBadRequest) GetPayload() *models.FwmgrMsaReplyMetaOnly {
+func (o *CreateRuleGroupValidationBadRequest) GetPayload() *models.FwmgrMsaspecResponseFields {
 	return o.Payload
 }
 
@@ -264,7 +264,7 @@ func (o *CreateRuleGroupValidationBadRequest) readResponse(response runtime.Clie
 		o.XRateLimitRemaining = valxRateLimitRemaining
 	}
 
-	o.Payload = new(models.FwmgrMsaReplyMetaOnly)
+	o.Payload = new(models.FwmgrMsaspecResponseFields)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

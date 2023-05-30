@@ -188,7 +188,7 @@ type CreateRuleGroupBadRequest struct {
 	 */
 	XRateLimitRemaining int64
 
-	Payload *models.FwmgrMsaReplyMetaOnly
+	Payload *models.FwmgrMsaspecResponseFields
 }
 
 // IsSuccess returns true when this create rule group bad request response has a 2xx status code
@@ -229,7 +229,7 @@ func (o *CreateRuleGroupBadRequest) String() string {
 	return fmt.Sprintf("[POST /fwmgr/entities/rule-groups/v1][%d] createRuleGroupBadRequest  %+v", 400, o.Payload)
 }
 
-func (o *CreateRuleGroupBadRequest) GetPayload() *models.FwmgrMsaReplyMetaOnly {
+func (o *CreateRuleGroupBadRequest) GetPayload() *models.FwmgrMsaspecResponseFields {
 	return o.Payload
 }
 
@@ -264,7 +264,7 @@ func (o *CreateRuleGroupBadRequest) readResponse(response runtime.ClientResponse
 		o.XRateLimitRemaining = valxRateLimitRemaining
 	}
 
-	o.Payload = new(models.FwmgrMsaReplyMetaOnly)
+	o.Payload = new(models.FwmgrMsaspecResponseFields)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

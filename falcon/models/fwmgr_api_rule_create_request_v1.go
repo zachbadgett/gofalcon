@@ -44,6 +44,14 @@ type FwmgrAPIRuleCreateRequestV1 struct {
 	// Required: true
 	Fields []*FwmgrAPIWorkaroundUIFieldValue `json:"fields"`
 
+	// fqdn
+	// Required: true
+	Fqdn *string `json:"fqdn"`
+
+	// fqdn enabled
+	// Required: true
+	FqdnEnabled *bool `json:"fqdn_enabled"`
+
 	// icmp
 	// Required: true
 	Icmp *FwmgrDomainICMP `json:"icmp"`
@@ -110,6 +118,14 @@ func (m *FwmgrAPIRuleCreateRequestV1) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateFields(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateFqdn(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateFqdnEnabled(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -226,6 +242,24 @@ func (m *FwmgrAPIRuleCreateRequestV1) validateFields(formats strfmt.Registry) er
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *FwmgrAPIRuleCreateRequestV1) validateFqdn(formats strfmt.Registry) error {
+
+	if err := validate.Required("fqdn", "body", m.Fqdn); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *FwmgrAPIRuleCreateRequestV1) validateFqdnEnabled(formats strfmt.Registry) error {
+
+	if err := validate.Required("fqdn_enabled", "body", m.FqdnEnabled); err != nil {
+		return err
 	}
 
 	return nil

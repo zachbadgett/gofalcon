@@ -26,6 +26,12 @@ type DomainMatchedBreachSummaryV1 struct {
 	// The level of confidence regarding data veridicality. Options for likely authentic, confirmed authentic (default: unverified).
 	ConfidenceLevel string `json:"confidence_level,omitempty"`
 
+	// credentials domains
+	CredentialsDomains []string `json:"credentials_domains"`
+
+	// credentials ips
+	CredentialsIps []string `json:"credentials_ips"`
+
 	// The description of the breach
 	// Required: true
 	Description *string `json:"description"`
@@ -46,12 +52,6 @@ type DomainMatchedBreachSummaryV1 struct {
 
 	// Metadata regarding the file(s) where exposed data records where found.
 	Files []*DomainFileDetailsV1 `json:"files"`
-
-	// Where the exposed data event happened. (e.g. LinkedIn or linkedin[.]com)
-	ImpactedDomains []string `json:"impacted_domains"`
-
-	// Where the exposed data event happened
-	ImpactedIps []string `json:"impacted_ips"`
 
 	// The name of the breach
 	// Required: true

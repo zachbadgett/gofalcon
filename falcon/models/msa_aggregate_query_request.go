@@ -44,9 +44,11 @@ type MsaAggregateQueryRequest struct {
 	// Required: true
 	Interval *string `json:"interval"`
 
+	// max doc count
+	MaxDocCount int64 `json:"max_doc_count,omitempty"`
+
 	// min doc count
-	// Required: true
-	MinDocCount *int64 `json:"min_doc_count"`
+	MinDocCount int64 `json:"min_doc_count,omitempty"`
 
 	// missing
 	// Required: true
@@ -110,10 +112,6 @@ func (m *MsaAggregateQueryRequest) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateInterval(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateMinDocCount(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -225,15 +223,6 @@ func (m *MsaAggregateQueryRequest) validateInclude(formats strfmt.Registry) erro
 func (m *MsaAggregateQueryRequest) validateInterval(formats strfmt.Registry) error {
 
 	if err := validate.Required("interval", "body", m.Interval); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *MsaAggregateQueryRequest) validateMinDocCount(formats strfmt.Registry) error {
-
-	if err := validate.Required("min_doc_count", "body", m.MinDocCount); err != nil {
 		return err
 	}
 

@@ -27,6 +27,10 @@ type DomainActorDocument struct {
 	// actor type
 	ActorType string `json:"actor_type,omitempty"`
 
+	// capabilities
+	// Required: true
+	Capabilities []*DomainEntity `json:"capabilities"`
+
 	// capability
 	Capability *DomainEntity `json:"capability,omitempty"`
 
@@ -84,9 +88,16 @@ type DomainActorDocument struct {
 	// Required: true
 	NotifyUsers *bool `json:"notify_users"`
 
+	// objectives
+	// Required: true
+	Objectives []*DomainEntity `json:"objectives"`
+
 	// origins
 	// Required: true
 	Origins []*DomainEntity `json:"origins"`
+
+	// recent alerting
+	RecentAlerting int64 `json:"recent_alerting,omitempty"`
 
 	// region
 	Region *DomainEntity `json:"region,omitempty"`
@@ -102,6 +113,10 @@ type DomainActorDocument struct {
 	// Required: true
 	Slug *string `json:"slug"`
 
+	// status
+	// Required: true
+	Status *string `json:"status"`
+
 	// target countries
 	// Required: true
 	TargetCountries []*DomainEntity `json:"target_countries"`
@@ -109,6 +124,10 @@ type DomainActorDocument struct {
 	// target industries
 	// Required: true
 	TargetIndustries []*DomainEntity `json:"target_industries"`
+
+	// target regions
+	// Required: true
+	TargetRegions []*DomainEntity `json:"target_regions"`
 
 	// thumbnail
 	Thumbnail *DomainImage `json:"thumbnail,omitempty"`
@@ -122,6 +141,10 @@ func (m *DomainActorDocument) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateActive(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCapabilities(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -185,6 +208,10 @@ func (m *DomainActorDocument) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateObjectives(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrigins(formats); err != nil {
 		res = append(res, err)
 	}
@@ -201,11 +228,19 @@ func (m *DomainActorDocument) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTargetCountries(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateTargetIndustries(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTargetRegions(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -223,6 +258,33 @@ func (m *DomainActorDocument) validateActive(formats strfmt.Registry) error {
 
 	if err := validate.Required("active", "body", m.Active); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *DomainActorDocument) validateCapabilities(formats strfmt.Registry) error {
+
+	if err := validate.Required("capabilities", "body", m.Capabilities); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.Capabilities); i++ {
+		if swag.IsZero(m.Capabilities[i]) { // not required
+			continue
+		}
+
+		if m.Capabilities[i] != nil {
+			if err := m.Capabilities[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("capabilities" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("capabilities" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -448,6 +510,33 @@ func (m *DomainActorDocument) validateNotifyUsers(formats strfmt.Registry) error
 	return nil
 }
 
+func (m *DomainActorDocument) validateObjectives(formats strfmt.Registry) error {
+
+	if err := validate.Required("objectives", "body", m.Objectives); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.Objectives); i++ {
+		if swag.IsZero(m.Objectives[i]) { // not required
+			continue
+		}
+
+		if m.Objectives[i] != nil {
+			if err := m.Objectives[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("objectives" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("objectives" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *DomainActorDocument) validateOrigins(formats strfmt.Registry) error {
 
 	if err := validate.Required("origins", "body", m.Origins); err != nil {
@@ -512,6 +601,15 @@ func (m *DomainActorDocument) validateSlug(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *DomainActorDocument) validateStatus(formats strfmt.Registry) error {
+
+	if err := validate.Required("status", "body", m.Status); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *DomainActorDocument) validateTargetCountries(formats strfmt.Registry) error {
 
 	if err := validate.Required("target_countries", "body", m.TargetCountries); err != nil {
@@ -566,6 +664,33 @@ func (m *DomainActorDocument) validateTargetIndustries(formats strfmt.Registry) 
 	return nil
 }
 
+func (m *DomainActorDocument) validateTargetRegions(formats strfmt.Registry) error {
+
+	if err := validate.Required("target_regions", "body", m.TargetRegions); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.TargetRegions); i++ {
+		if swag.IsZero(m.TargetRegions[i]) { // not required
+			continue
+		}
+
+		if m.TargetRegions[i] != nil {
+			if err := m.TargetRegions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("target_regions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("target_regions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *DomainActorDocument) validateThumbnail(formats strfmt.Registry) error {
 	if swag.IsZero(m.Thumbnail) { // not required
 		return nil
@@ -588,6 +713,10 @@ func (m *DomainActorDocument) validateThumbnail(formats strfmt.Registry) error {
 // ContextValidate validate this domain actor document based on the context it is used
 func (m *DomainActorDocument) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.contextValidateCapabilities(ctx, formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.contextValidateCapability(ctx, formats); err != nil {
 		res = append(res, err)
@@ -617,6 +746,10 @@ func (m *DomainActorDocument) ContextValidate(ctx context.Context, formats strfm
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateObjectives(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateOrigins(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -633,6 +766,10 @@ func (m *DomainActorDocument) ContextValidate(ctx context.Context, formats strfm
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateTargetRegions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateThumbnail(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -640,6 +777,26 @@ func (m *DomainActorDocument) ContextValidate(ctx context.Context, formats strfm
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DomainActorDocument) contextValidateCapabilities(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Capabilities); i++ {
+
+		if m.Capabilities[i] != nil {
+			if err := m.Capabilities[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("capabilities" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("capabilities" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -763,6 +920,26 @@ func (m *DomainActorDocument) contextValidateMotivations(ctx context.Context, fo
 	return nil
 }
 
+func (m *DomainActorDocument) contextValidateObjectives(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Objectives); i++ {
+
+		if m.Objectives[i] != nil {
+			if err := m.Objectives[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("objectives" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("objectives" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *DomainActorDocument) contextValidateOrigins(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(m.Origins); i++ {
@@ -829,6 +1006,26 @@ func (m *DomainActorDocument) contextValidateTargetIndustries(ctx context.Contex
 					return ve.ValidateName("target_industries" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("target_industries" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *DomainActorDocument) contextValidateTargetRegions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.TargetRegions); i++ {
+
+		if m.TargetRegions[i] != nil {
+			if err := m.TargetRegions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("target_regions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("target_regions" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

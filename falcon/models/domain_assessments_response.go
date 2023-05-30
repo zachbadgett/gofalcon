@@ -26,7 +26,7 @@ type DomainAssessmentsResponse struct {
 
 	// meta
 	// Required: true
-	Meta *MsaMetaInfo `json:"meta"`
+	Meta *DomainMetaInfo `json:"meta"`
 
 	// resources
 	// Required: true

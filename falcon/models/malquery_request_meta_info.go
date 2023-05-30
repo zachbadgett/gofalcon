@@ -55,7 +55,7 @@ type MalqueryRequestMetaInfo struct {
 	TraceID *string `json:"trace_id"`
 
 	// writes
-	Writes *MsaResources `json:"writes,omitempty"`
+	Writes *MsaspecWrites `json:"writes,omitempty"`
 
 	// YARA rule to be monitored
 	YaraRule string `json:"yara_rule,omitempty"`

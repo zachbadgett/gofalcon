@@ -26,7 +26,7 @@ type K8sregAWSAccountResp struct {
 
 	// aws permissions status
 	// Required: true
-	AwsPermissionsStatus []*K8sregAWSAccountPermissionsStatus `json:"aws_permissions_status"`
+	AwsPermissionsStatus []*K8sregAccountPermissionsStatus `json:"aws_permissions_status"`
 
 	// cid
 	// Required: true

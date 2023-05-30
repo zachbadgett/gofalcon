@@ -49,6 +49,9 @@ type FalconxSandboxReportV1 struct {
 	// error type
 	ErrorType string `json:"error_type,omitempty"`
 
+	// exact deep hash
+	ExactDeepHash string `json:"exact_deep_hash,omitempty"`
+
 	// extracted files
 	ExtractedFiles []*FalconxExtractedFile `json:"extracted_files"`
 
@@ -76,11 +79,20 @@ type FalconxSandboxReportV1 struct {
 	// incidents
 	Incidents []*FalconxIncident `json:"incidents"`
 
+	// intelligence mitre attacks
+	IntelligenceMitreAttacks []*FalconxMITREAttack `json:"intelligence_mitre_attacks"`
+
 	// ioc report broad artifact id
 	IocReportBroadArtifactID string `json:"ioc_report_broad_artifact_id,omitempty"`
 
 	// ioc report strict artifact id
 	IocReportStrictArtifactID string `json:"ioc_report_strict_artifact_id,omitempty"`
+
+	// memory dumps
+	MemoryDumps []*FalconxMemoryDumpData `json:"memory_dumps"`
+
+	// memory dumps artifact id
+	MemoryDumpsArtifactID string `json:"memory_dumps_artifact_id,omitempty"`
 
 	// memory forensics
 	MemoryForensics []*FalconxMemoryForensic `json:"memory_forensics"`
@@ -90,6 +102,9 @@ type FalconxSandboxReportV1 struct {
 
 	// mitre attacks
 	MitreAttacks []*FalconxMITREAttack `json:"mitre_attacks"`
+
+	// network settings
+	NetworkSettings string `json:"network_settings,omitempty"`
 
 	// packer
 	Packer string `json:"packer,omitempty"`
@@ -129,6 +144,9 @@ type FalconxSandboxReportV1 struct {
 
 	// threat score
 	ThreatScore int32 `json:"threat_score,omitempty"`
+
+	// urls
+	Urls []*FalconxURLData `json:"urls"`
 
 	// verdict
 	Verdict string `json:"verdict,omitempty"`
@@ -188,6 +206,14 @@ func (m *FalconxSandboxReportV1) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateIntelligenceMitreAttacks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMemoryDumps(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateMemoryForensics(formats); err != nil {
 		res = append(res, err)
 	}
@@ -205,6 +231,10 @@ func (m *FalconxSandboxReportV1) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateSuricataAlerts(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUrls(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -419,6 +449,58 @@ func (m *FalconxSandboxReportV1) validateIncidents(formats strfmt.Registry) erro
 	return nil
 }
 
+func (m *FalconxSandboxReportV1) validateIntelligenceMitreAttacks(formats strfmt.Registry) error {
+	if swag.IsZero(m.IntelligenceMitreAttacks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.IntelligenceMitreAttacks); i++ {
+		if swag.IsZero(m.IntelligenceMitreAttacks[i]) { // not required
+			continue
+		}
+
+		if m.IntelligenceMitreAttacks[i] != nil {
+			if err := m.IntelligenceMitreAttacks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("intelligence_mitre_attacks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("intelligence_mitre_attacks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *FalconxSandboxReportV1) validateMemoryDumps(formats strfmt.Registry) error {
+	if swag.IsZero(m.MemoryDumps) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.MemoryDumps); i++ {
+		if swag.IsZero(m.MemoryDumps[i]) { // not required
+			continue
+		}
+
+		if m.MemoryDumps[i] != nil {
+			if err := m.MemoryDumps[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("memory_dumps" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("memory_dumps" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *FalconxSandboxReportV1) validateMemoryForensics(formats strfmt.Registry) error {
 	if swag.IsZero(m.MemoryForensics) { // not required
 		return nil
@@ -549,6 +631,32 @@ func (m *FalconxSandboxReportV1) validateSuricataAlerts(formats strfmt.Registry)
 	return nil
 }
 
+func (m *FalconxSandboxReportV1) validateUrls(formats strfmt.Registry) error {
+	if swag.IsZero(m.Urls) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Urls); i++ {
+		if swag.IsZero(m.Urls[i]) { // not required
+			continue
+		}
+
+		if m.Urls[i] != nil {
+			if err := m.Urls[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("urls" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("urls" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *FalconxSandboxReportV1) validateVersionInfo(formats strfmt.Registry) error {
 	if swag.IsZero(m.VersionInfo) { // not required
 		return nil
@@ -611,6 +719,14 @@ func (m *FalconxSandboxReportV1) ContextValidate(ctx context.Context, formats st
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateIntelligenceMitreAttacks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateMemoryDumps(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateMemoryForensics(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -628,6 +744,10 @@ func (m *FalconxSandboxReportV1) ContextValidate(ctx context.Context, formats st
 	}
 
 	if err := m.contextValidateSuricataAlerts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateUrls(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -797,6 +917,46 @@ func (m *FalconxSandboxReportV1) contextValidateIncidents(ctx context.Context, f
 	return nil
 }
 
+func (m *FalconxSandboxReportV1) contextValidateIntelligenceMitreAttacks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.IntelligenceMitreAttacks); i++ {
+
+		if m.IntelligenceMitreAttacks[i] != nil {
+			if err := m.IntelligenceMitreAttacks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("intelligence_mitre_attacks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("intelligence_mitre_attacks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *FalconxSandboxReportV1) contextValidateMemoryDumps(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.MemoryDumps); i++ {
+
+		if m.MemoryDumps[i] != nil {
+			if err := m.MemoryDumps[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("memory_dumps" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("memory_dumps" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *FalconxSandboxReportV1) contextValidateMemoryForensics(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(m.MemoryForensics); i++ {
@@ -887,6 +1047,26 @@ func (m *FalconxSandboxReportV1) contextValidateSuricataAlerts(ctx context.Conte
 					return ve.ValidateName("suricata_alerts" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("suricata_alerts" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *FalconxSandboxReportV1) contextValidateUrls(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Urls); i++ {
+
+		if m.Urls[i] != nil {
+			if err := m.Urls[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("urls" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("urls" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -39,7 +39,7 @@ type MalqueryQueryMetaInfo struct {
 	TraceID *string `json:"trace_id"`
 
 	// writes
-	Writes *MsaResources `json:"writes,omitempty"`
+	Writes *MsaspecWrites `json:"writes,omitempty"`
 }
 
 // Validate validates this malquery query meta info

@@ -10,13 +10,12 @@
   # Rename msaspec.Error back to msa.APIError. These are two names for the same type.
   | walk(
     if type == "object" and has("$ref") and ."$ref" == "#/definitions/msaspec.Error" then ."$ref" = "#/definitions/msa.APIError" else . end
+    | if type == "object" and has("$ref") and ."$ref" == "#/definitions/msaspec.Paging" then ."$ref" = "#/definitions/msa.Paging" else . end
     | if type == "object" and has("$ref") and ."$ref" == "#/definitions/msaspec.MetaInfo" then ."$ref" = "#/definitions/msa.MetaInfo" else . end
     )
   | del(.definitions."msaspec.Error")
   # Rename msaspec.Paging to msa.Paging. These are two names for the same type.
   | del(.definitions."msaspec.Paging")
-  | .definitions."domain.RuleMetaInfo".properties.pagination."$ref" = "#/definitions/msa.Paging"
-  | .definitions."domain.MsaMetaInfo".properties.pagination."$ref" = "#/definitions/msa.Paging"
   # Rename msaspec.MetaInfo to msa.MetaInfo. These are two names for the same type.
   | del(.definitions."msaspec.MetaInfo")
 
@@ -42,8 +41,6 @@
   | .paths."/policy/queries/sensor-update-kernels/{distinct_field}/v1" = .paths."/policy/queries/sensor-update-kernels/{distinct-field}/v1"
   | del(.paths."/policy/queries/sensor-update-kernels/{distinct-field}/v1")
   | .paths."/policy/queries/sensor-update-kernels/{distinct_field}/v1".get.parameters[0].name = "distinct_field"
-  | .paths."/cloud-connect-azure/entities/download-certificate/v1".get.parameters[1].default = "false"
-  | .paths."/cloud-connect-cspm-azure/entities/download-certificate/v1".get.parameters[1].default = "false"
 
   # Needed by rusty-falcon (stricter typing)
   | .definitions."deviceapi.DeviceDetailsResponseSwagger".properties.errors."x-nullable" = true

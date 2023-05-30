@@ -19,6 +19,9 @@ import (
 // swagger:model api.IndicatorsReportRequest
 type APIIndicatorsReportRequest struct {
 
+	// from parent
+	FromParent bool `json:"from_parent,omitempty"`
+
 	// report format
 	// Required: true
 	ReportFormat *string `json:"report_format"`

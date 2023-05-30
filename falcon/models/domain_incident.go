@@ -38,6 +38,9 @@ type DomainIncident struct {
 	// description
 	Description string `json:"description,omitempty"`
 
+	// email state
+	EmailState string `json:"email_state,omitempty"`
+
 	// end
 	// Required: true
 	// Format: date-time
@@ -69,6 +72,15 @@ type DomainIncident struct {
 
 	// lm hosts capped
 	LmHostsCapped bool `json:"lm_hosts_capped,omitempty"`
+
+	// lm types
+	LmTypes int64 `json:"lm_types,omitempty"`
+
+	// lmra host ids
+	LmraHostIds []string `json:"lmra_host_ids"`
+
+	// lmra hosts capped
+	LmraHostsCapped bool `json:"lmra_hosts_capped,omitempty"`
 
 	// modified timestamp
 	// Format: date-time

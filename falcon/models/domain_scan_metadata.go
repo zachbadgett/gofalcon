@@ -37,6 +37,9 @@ type DomainScanMetadata struct {
 	// Format: date-time
 	LastUpdated strfmt.DateTime `json:"last_updated,omitempty"`
 
+	// scan control reason
+	ScanControlReason string `json:"scan_control_reason,omitempty"`
+
 	// scan host metadata id
 	ScanHostMetadataID string `json:"scan_host_metadata_id,omitempty"`
 

@@ -35,6 +35,9 @@ type SadomainTyposquattingComponent struct {
 	// Required: true
 	PunycodeFormat *string `json:"punycode_format"`
 
+	// submit for blocking info
+	SubmitForBlockingInfo *SadomainSubmitForBlockingInfo `json:"submit_for_blocking_info,omitempty"`
+
 	// The Unicode representation of the infrastructure component
 	// Required: true
 	UnicodeFormat *string `json:"unicode_format"`
@@ -57,6 +60,10 @@ func (m *SadomainTyposquattingComponent) Validate(formats strfmt.Registry) error
 	}
 
 	if err := m.validatePunycodeFormat(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSubmitForBlockingInfo(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -128,6 +135,25 @@ func (m *SadomainTyposquattingComponent) validatePunycodeFormat(formats strfmt.R
 	return nil
 }
 
+func (m *SadomainTyposquattingComponent) validateSubmitForBlockingInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.SubmitForBlockingInfo) { // not required
+		return nil
+	}
+
+	if m.SubmitForBlockingInfo != nil {
+		if err := m.SubmitForBlockingInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("submit_for_blocking_info")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("submit_for_blocking_info")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *SadomainTyposquattingComponent) validateUnicodeFormat(formats strfmt.Registry) error {
 
 	if err := validate.Required("unicode_format", "body", m.UnicodeFormat); err != nil {
@@ -146,6 +172,10 @@ func (m *SadomainTyposquattingComponent) ContextValidate(ctx context.Context, fo
 	}
 
 	if err := m.contextValidateParentDomain(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSubmitForBlockingInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -179,6 +209,22 @@ func (m *SadomainTyposquattingComponent) contextValidateParentDomain(ctx context
 				return ve.ValidateName("parent_domain")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("parent_domain")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *SadomainTyposquattingComponent) contextValidateSubmitForBlockingInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SubmitForBlockingInfo != nil {
+		if err := m.SubmitForBlockingInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("submit_for_blocking_info")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("submit_for_blocking_info")
 			}
 			return err
 		}

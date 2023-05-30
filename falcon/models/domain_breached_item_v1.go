@@ -22,6 +22,9 @@ type DomainBreachedItemV1 struct {
 	// company
 	Company string `json:"company,omitempty"`
 
+	// credentials domain
+	CredentialsDomain string `json:"credentials_domain,omitempty"`
+
 	// credentials ip
 	CredentialsIP string `json:"credentials_ip,omitempty"`
 

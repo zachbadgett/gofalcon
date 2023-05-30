@@ -40,6 +40,14 @@ type ClientService interface {
 
 	QueryAccounts(params *QueryAccountsParams, opts ...ClientOption) (*QueryAccountsOK, error)
 
+	QueryActiveDiscoveryNetworks(params *QueryActiveDiscoveryNetworksParams, opts ...ClientOption) (*QueryActiveDiscoveryNetworksOK, error)
+
+	QueryActiveDiscoveryRules(params *QueryActiveDiscoveryRulesParams, opts ...ClientOption) (*QueryActiveDiscoveryRulesOK, error)
+
+	QueryActiveDiscoveryScanners(params *QueryActiveDiscoveryScannersParams, opts ...ClientOption) (*QueryActiveDiscoveryScannersOK, error)
+
+	QueryActiveDiscoveryScans(params *QueryActiveDiscoveryScansParams, opts ...ClientOption) (*QueryActiveDiscoveryScansOK, error)
+
 	QueryApplications(params *QueryApplicationsParams, opts ...ClientOption) (*QueryApplicationsOK, error)
 
 	QueryHosts(params *QueryHostsParams, opts ...ClientOption) (*QueryHostsOK, error)
@@ -82,8 +90,9 @@ func (a *Client) GetAccounts(params *GetAccountsParams, opts ...ClientOption) (*
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetAccountsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for get-accounts: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -195,8 +204,9 @@ func (a *Client) GetLogins(params *GetLoginsParams, opts ...ClientOption) (*GetL
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetLoginsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for get-logins: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -232,8 +242,161 @@ func (a *Client) QueryAccounts(params *QueryAccountsParams, opts ...ClientOption
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueryAccountsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-accounts: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+QueryActiveDiscoveryNetworks searches for active discovery networks in your environment by providing an f q l filter and paging details returns a set of network i ds which match the filter criteria
+*/
+func (a *Client) QueryActiveDiscoveryNetworks(params *QueryActiveDiscoveryNetworksParams, opts ...ClientOption) (*QueryActiveDiscoveryNetworksOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewQueryActiveDiscoveryNetworksParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "query-active-discovery-networks",
+		Method:             "GET",
+		PathPattern:        "/discover/queries/active-discovery-networks/v1",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &QueryActiveDiscoveryNetworksReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*QueryActiveDiscoveryNetworksOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-active-discovery-networks: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+QueryActiveDiscoveryRules searches for active discovery rules in your environment by providing an f q l filter and paging details returns a set of rule i ds which match the filter criteria
+*/
+func (a *Client) QueryActiveDiscoveryRules(params *QueryActiveDiscoveryRulesParams, opts ...ClientOption) (*QueryActiveDiscoveryRulesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewQueryActiveDiscoveryRulesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "query-active-discovery-rules",
+		Method:             "GET",
+		PathPattern:        "/discover/queries/active-discovery-rules/v1",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &QueryActiveDiscoveryRulesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*QueryActiveDiscoveryRulesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-active-discovery-rules: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+QueryActiveDiscoveryScanners searches for active discovery scanners in your environment by providing an f q l filter and paging details returns a set of scanner i ds which match the filter criteria
+*/
+func (a *Client) QueryActiveDiscoveryScanners(params *QueryActiveDiscoveryScannersParams, opts ...ClientOption) (*QueryActiveDiscoveryScannersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewQueryActiveDiscoveryScannersParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "query-active-discovery-scanners",
+		Method:             "GET",
+		PathPattern:        "/discover/queries/active-discovery-scanners/v1",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &QueryActiveDiscoveryScannersReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*QueryActiveDiscoveryScannersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-active-discovery-scanners: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+QueryActiveDiscoveryScans searches for active discovery scans in your environment by providing an f q l filter and paging details returns a set of scan i ds which match the filter criteria
+*/
+func (a *Client) QueryActiveDiscoveryScans(params *QueryActiveDiscoveryScansParams, opts ...ClientOption) (*QueryActiveDiscoveryScansOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewQueryActiveDiscoveryScansParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "query-active-discovery-scans",
+		Method:             "GET",
+		PathPattern:        "/discover/queries/active-discovery-scans/v1",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &QueryActiveDiscoveryScansReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*QueryActiveDiscoveryScansOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-active-discovery-scans: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -345,8 +508,9 @@ func (a *Client) QueryLogins(params *QueryLoginsParams, opts ...ClientOption) (*
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*QueryLoginsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for query-logins: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

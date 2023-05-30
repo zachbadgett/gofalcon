@@ -43,6 +43,9 @@ type FalconxSandboxSummaryReportV1 struct {
 	// incidents
 	Incidents []*FalconxIncident `json:"incidents"`
 
+	// network settings
+	NetworkSettings string `json:"network_settings,omitempty"`
+
 	// sample flags
 	SampleFlags []string `json:"sample_flags"`
 

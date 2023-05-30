@@ -43,11 +43,17 @@ type QuarantineQuarantinedFile struct {
 	// id
 	ID string `json:"id,omitempty"`
 
+	// is on removable disk
+	IsOnRemovableDisk bool `json:"is_on_removable_disk,omitempty"`
+
 	// paths
 	Paths []*QuarantineQuarantinedFilePath `json:"paths"`
 
 	// primary module
 	PrimaryModule bool `json:"primary_module,omitempty"`
+
+	// release path for removable media
+	ReleasePathForRemovableMedia string `json:"release_path_for_removable_media,omitempty"`
 
 	// sandbox report id
 	SandboxReportID string `json:"sandbox_report_id,omitempty"`

@@ -28,8 +28,14 @@ type FalconxReportV1 struct {
 	// id
 	ID string `json:"id,omitempty"`
 
+	// index timestamp
+	IndexTimestamp string `json:"index_timestamp,omitempty"`
+
 	// intel
 	Intel []*FalconxIntelReportV1 `json:"intel"`
+
+	// intelx
+	Intelx *FalconxIntelXReportV1 `json:"intelx,omitempty"`
 
 	// ioc report broad csv artifact id
 	IocReportBroadCsvArtifactID string `json:"ioc_report_broad_csv_artifact_id,omitempty"`
@@ -94,6 +100,10 @@ func (m *FalconxReportV1) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateIntelx(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateMalquery(formats); err != nil {
 		res = append(res, err)
 	}
@@ -133,6 +143,25 @@ func (m *FalconxReportV1) validateIntel(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *FalconxReportV1) validateIntelx(formats strfmt.Registry) error {
+	if swag.IsZero(m.Intelx) { // not required
+		return nil
+	}
+
+	if m.Intelx != nil {
+		if err := m.Intelx.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("intelx")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("intelx")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -217,6 +246,10 @@ func (m *FalconxReportV1) ContextValidate(ctx context.Context, formats strfmt.Re
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateIntelx(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateMalquery(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -250,6 +283,22 @@ func (m *FalconxReportV1) contextValidateIntel(ctx context.Context, formats strf
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *FalconxReportV1) contextValidateIntelx(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Intelx != nil {
+		if err := m.Intelx.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("intelx")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("intelx")
+			}
+			return err
+		}
 	}
 
 	return nil

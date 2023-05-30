@@ -38,14 +38,23 @@ type APINotificationExposedDataRecordV1 struct {
 	// Format: date-time
 	CreatedDate *strfmt.DateTime `json:"created_date"`
 
+	// The domain where the credentials are valid
+	CredentialsDomain string `json:"credentials_domain,omitempty"`
+
+	// The IP where the credentials are valid
+	CredentialsIP string `json:"credentials_ip,omitempty"`
+
+	// The URL where the credentials are valid
+	CredentialsURL string `json:"credentials_url,omitempty"`
+
 	// The nickname of the user on the impacted site
 	DisplayName string `json:"display_name,omitempty"`
 
+	// The domain of the email linked to the impacted site
+	Domain string `json:"domain,omitempty"`
+
 	// The email linked to the impacted site
 	Email string `json:"email,omitempty"`
-
-	// The domain of the email
-	EmailDomain string `json:"email_domain,omitempty"`
 
 	// The approximate date when the event occurred
 	// Required: true
@@ -71,15 +80,6 @@ type APINotificationExposedDataRecordV1 struct {
 	// The ID of this entity
 	// Required: true
 	ID *string `json:"id"`
-
-	// The domain where the credentials are valid
-	ImpactedDomain string `json:"impacted_domain,omitempty"`
-
-	// The IP where the credentials are valid
-	ImpactedIP string `json:"impacted_ip,omitempty"`
-
-	// The URL where the credentials are valid
-	ImpactedURL string `json:"impacted_url,omitempty"`
 
 	// The users job at the company
 	JobPosition string `json:"job_position,omitempty"`

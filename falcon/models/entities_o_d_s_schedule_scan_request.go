@@ -71,6 +71,10 @@ type EntitiesODSScheduleScanRequest struct {
 	// Required: true
 	ScanExclusions []string `json:"scan_exclusions"`
 
+	// scan inclusions
+	// Required: true
+	ScanInclusions []string `json:"scan_inclusions"`
+
 	// schedule
 	// Required: true
 	Schedule *DomainSchedule `json:"schedule"`
@@ -137,6 +141,10 @@ func (m *EntitiesODSScheduleScanRequest) Validate(formats strfmt.Registry) error
 	}
 
 	if err := m.validateScanExclusions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateScanInclusions(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -269,6 +277,15 @@ func (m *EntitiesODSScheduleScanRequest) validateQuarantine(formats strfmt.Regis
 func (m *EntitiesODSScheduleScanRequest) validateScanExclusions(formats strfmt.Registry) error {
 
 	if err := validate.Required("scan_exclusions", "body", m.ScanExclusions); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *EntitiesODSScheduleScanRequest) validateScanInclusions(formats strfmt.Registry) error {
+
+	if err := validate.Required("scan_inclusions", "body", m.ScanInclusions); err != nil {
 		return err
 	}
 

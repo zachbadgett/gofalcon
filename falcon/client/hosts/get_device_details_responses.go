@@ -410,7 +410,7 @@ func NewGetDeviceDetailsDefault(code int) *GetDeviceDetailsDefault {
 /*
 GetDeviceDetailsDefault describes a response with status code -1, with default header values.
 
-OK
+GetDeviceDetailsDefault get device details default
 */
 type GetDeviceDetailsDefault struct {
 	_statusCode int

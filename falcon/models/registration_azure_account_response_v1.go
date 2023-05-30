@@ -30,7 +30,7 @@ type RegistrationAzureAccountResponseV1 struct {
 
 	// resources
 	// Required: true
-	Resources []*DomainAzureAccountV1 `json:"resources"`
+	Resources []*RegistrationAzureAccountV1Ext `json:"resources"`
 }
 
 // Validate validates this registration azure account response v1

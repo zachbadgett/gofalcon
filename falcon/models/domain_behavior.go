@@ -34,11 +34,17 @@ type DomainBehavior struct {
 	// compound tto
 	CompoundTto string `json:"compound_tto,omitempty"`
 
-	// detection id
-	DetectionID string `json:"detection_id,omitempty"`
+	// detection ids
+	DetectionIds []string `json:"detection_ids"`
+
+	// display name
+	DisplayName string `json:"display_name,omitempty"`
 
 	// domain
 	Domain string `json:"domain,omitempty"`
+
+	// exclusion type
+	ExclusionType string `json:"exclusion_type,omitempty"`
 
 	// filepath
 	Filepath string `json:"filepath,omitempty"`
@@ -65,7 +71,7 @@ type DomainBehavior struct {
 	PatternDisposition int32 `json:"pattern_disposition,omitempty"`
 
 	// pattern disposition details
-	PatternDispositionDetails *CloudontologyPatternDisposition `json:"pattern_disposition_details,omitempty"`
+	PatternDispositionDetails *PatterndispositionPatternDisposition `json:"pattern_disposition_details,omitempty"`
 
 	// pattern id
 	// Required: true
@@ -77,8 +83,14 @@ type DomainBehavior struct {
 	// tactic
 	Tactic string `json:"tactic,omitempty"`
 
+	// tactic id
+	TacticID string `json:"tactic_id,omitempty"`
+
 	// technique
 	Technique string `json:"technique,omitempty"`
+
+	// technique id
+	TechniqueID string `json:"technique_id,omitempty"`
 
 	// template instance id
 	// Required: true

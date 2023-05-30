@@ -20,7 +20,7 @@ import (
 type MsaEntityActionRequest struct {
 
 	// action parameters
-	ActionParameters []*MsaActionParameter `json:"action_parameters"`
+	ActionParameters []*MsaspecActionParameter `json:"action_parameters"`
 }
 
 // Validate validates this msa entity action request

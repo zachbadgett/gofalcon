@@ -45,6 +45,9 @@ type DomainAPIDetectionDocument struct {
 	// Format: date-time
 	CreatedTimestamp *strfmt.DateTime `json:"created_timestamp"`
 
+	// date updated
+	DateUpdated string `json:"date_updated,omitempty"`
+
 	// detection id
 	// Required: true
 	DetectionID *string `json:"detection_id"`

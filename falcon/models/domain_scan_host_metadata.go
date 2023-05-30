@@ -46,6 +46,9 @@ type DomainScanHostMetadata struct {
 	// profile id
 	ProfileID string `json:"profile_id,omitempty"`
 
+	// scan control reason
+	ScanControlReason string `json:"scan_control_reason,omitempty"`
+
 	// scan id
 	ScanID string `json:"scan_id,omitempty"`
 

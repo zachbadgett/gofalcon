@@ -19,6 +19,9 @@ import (
 // swagger:model falconx.Process
 type FalconxProcess struct {
 
+	// amsi calls
+	AmsiCalls []*FalconxAMSICall `json:"amsi_calls"`
+
 	// command line
 	CommandLine string `json:"command_line,omitempty"`
 
@@ -69,6 +72,10 @@ type FalconxProcess struct {
 func (m *FalconxProcess) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateAmsiCalls(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateFileAccesses(formats); err != nil {
 		res = append(res, err)
 	}
@@ -96,6 +103,32 @@ func (m *FalconxProcess) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *FalconxProcess) validateAmsiCalls(formats strfmt.Registry) error {
+	if swag.IsZero(m.AmsiCalls) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.AmsiCalls); i++ {
+		if swag.IsZero(m.AmsiCalls[i]) { // not required
+			continue
+		}
+
+		if m.AmsiCalls[i] != nil {
+			if err := m.AmsiCalls[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("amsi_calls" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("amsi_calls" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -259,6 +292,10 @@ func (m *FalconxProcess) validateStreams(formats strfmt.Registry) error {
 func (m *FalconxProcess) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateAmsiCalls(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateFileAccesses(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -286,6 +323,26 @@ func (m *FalconxProcess) ContextValidate(ctx context.Context, formats strfmt.Reg
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *FalconxProcess) contextValidateAmsiCalls(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.AmsiCalls); i++ {
+
+		if m.AmsiCalls[i] != nil {
+			if err := m.AmsiCalls[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("amsi_calls" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("amsi_calls" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
